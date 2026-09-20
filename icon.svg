@@ -1,23 +1,66 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
   <defs>
-    <clipPath id="c"><circle cx="256" cy="276" r="176"/></clipPath>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070b1a"/><stop offset=".5" stop-color="#101a3d"/><stop offset="1" stop-color="#0e4c8a"/>
+    </linearGradient>
+    <linearGradient id="ptr" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6fbff"/><stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+    <linearGradient id="hub" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b2540"/><stop offset="1" stop-color="#0b1020"/>
+    </linearGradient>
+    <linearGradient id="gloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff" stop-opacity=".75"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset=".78" stop-color="#22d3ee" stop-opacity="0"/><stop offset="1" stop-color="#38bdf8" stop-opacity=".85"/>
+    </radialGradient>
+    <clipPath id="c"><circle cx="256" cy="284" r="170"/></clipPath>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000814" flood-opacity=".7"/>
+    </filter>
   </defs>
-  <rect width="512" height="512" rx="112" fill="#f8f0e4"/>
-  <circle cx="256" cy="276" r="204" fill="#f27ea6"/>
-  <circle cx="256" cy="276" r="190" fill="#fff"/>
-  <g clip-path="url(#c)">
-    <path d="M256 276 L256 100 A176 176 0 0 1 408 188 Z" fill="#f9b4cc"/>
-    <path d="M256 276 L408 188 A176 176 0 0 1 408 364 Z" fill="#ffd9b0"/>
-    <path d="M256 276 L408 364 A176 176 0 0 1 256 452 Z" fill="#c3e8d8"/>
-    <path d="M256 276 L256 452 A176 176 0 0 1 104 364 Z" fill="#d6c6f4"/>
-    <path d="M256 276 L104 364 A176 176 0 0 1 104 188 Z" fill="#fff1b8"/>
-    <path d="M256 276 L104 188 A176 176 0 0 1 256 100 Z" fill="#ffc2c2"/>
-    <g stroke="#fff" stroke-width="8" fill="none">
-      <path d="M256 276 L256 100 M256 276 L408 188 M256 276 L408 364 M256 276 L256 452 M256 276 L104 364 M256 276 L104 188"/>
-    </g>
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <!-- 背景亮光 -->
+  <circle cx="120" cy="90" r="120" fill="#38bdf8" opacity=".12"/>
+  <circle cx="420" cy="440" r="140" fill="#7c3aed" opacity=".16"/>
+  <!-- 外圈光暈 -->
+  <circle cx="256" cy="284" r="222" fill="url(#glow)"/>
+  <!-- 轉盤 -->
+  <g filter="url(#sh)">
+    <circle cx="256" cy="284" r="200" fill="#e8f6ff"/>
+    <circle cx="256" cy="284" r="186" fill="#0ea5e9"/>
+    <circle cx="256" cy="284" r="174" fill="#0b1020"/>
   </g>
-  <circle cx="256" cy="276" r="52" fill="#fff"/>
-  <circle cx="256" cy="276" r="42" fill="#f27ea6"/>
-  <path d="M256 128 L214 48 A46 46 0 1 1 298 48 Z" fill="#f27ea6" stroke="#fff" stroke-width="10" stroke-linejoin="round"/>
-  <path d="M256 78 C248 66 232 68 234 54 C236 42 250 42 256 52 C262 42 276 42 278 54 C280 68 264 66 256 78 Z" fill="#fff"/>
+  <g clip-path="url(#c)">
+    <path d="M256 284 L256 114 A170 170 0 0 1 403 199 Z" fill="#2563eb"/>
+    <path d="M256 284 L403 199 A170 170 0 0 1 403 369 Z" fill="#f97316"/>
+    <path d="M256 284 L403 369 A170 170 0 0 1 256 454 Z" fill="#22d3ee"/>
+    <path d="M256 284 L256 454 A170 170 0 0 1 109 369 Z" fill="#7c3aed"/>
+    <path d="M256 284 L109 369 A170 170 0 0 1 109 199 Z" fill="#a3e635"/>
+    <path d="M256 284 L109 199 A170 170 0 0 1 256 114 Z" fill="#0ea5e9"/>
+    <path d="M256 284 L256 114 M256 284 L403 199 M256 284 L403 369 M256 284 L256 454 M256 284 L109 369 M256 284 L109 199" stroke="#0b1020" stroke-width="7"/>
+    <!-- 光澤 -->
+    <ellipse cx="200" cy="170" rx="150" ry="70" fill="url(#gloss)" transform="rotate(-25 200 170)"/>
+  </g>
+  <!-- 外圈小燈 -->
+  <g fill="#fff">
+    <circle cx="256" cy="104" r="6"/><circle cx="346" cy="128" r="6"/><circle cx="412" cy="194" r="6"/><circle cx="436" cy="284" r="6"/>
+    <circle cx="412" cy="374" r="6"/><circle cx="346" cy="440" r="6"/><circle cx="256" cy="464" r="6"/><circle cx="166" cy="440" r="6"/>
+    <circle cx="100" cy="374" r="6"/><circle cx="76" cy="284" r="6"/><circle cx="100" cy="194" r="6"/><circle cx="166" cy="128" r="6"/>
+  </g>
+  <!-- 中心 -->
+  <circle cx="256" cy="284" r="58" fill="#22d3ee" filter="url(#sh)"/>
+  <circle cx="256" cy="284" r="46" fill="url(#hub)"/>
+  <path d="M256 258 l8 18 20 2 -15 13 5 20 -18 -11 -18 11 5 -20 -15 -13 20 -2 Z" fill="#22d3ee"/>
+  <!-- 指針 -->
+  <path d="M256 150 L212 62 A50 50 0 1 1 300 62 Z" fill="url(#ptr)" stroke="#0b1020" stroke-width="10" stroke-linejoin="round" filter="url(#sh)"/>
+  <circle cx="256" cy="66" r="14" fill="#0b1020"/>
+  <!-- 星星 -->
+  <g fill="#fff">
+    <path d="M78 130 l6 16 16 6 -16 6 -6 16 -6 -16 -16 -6 16 -6 Z"/>
+    <path d="M440 96 l8 20 20 8 -20 8 -8 20 -8 -20 -20 -8 20 -8 Z"/>
+    <path d="M430 456 l5 12 12 5 -12 5 -5 12 -5 -12 -12 -5 12 -5 Z"/>
+    <path d="M62 440 l4 10 10 4 -10 4 -4 10 -4 -10 -10 -4 10 -4 Z"/>
+  </g>
 </svg>
