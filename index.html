@@ -3,7 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>幸運轉轉樂</title>
+<title>幸運轉盤</title>
+<meta name="theme-color" content="#f8f0e4">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="幸運轉盤">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
@@ -11,8 +18,9 @@
 :root{
   --bg:#f8f0e4; --bg2:#f3e6d8; --sur:#fffaf5; --line:#eddccf; --line2:#dcc3b3;
   --ink:#5a3e4f; --ink2:#8a6f7d; --ink3:#b09aa5;
-  --red:#f27ea6; --red2:#d95f8c; --gold:#f9c99a; --gold2:#e8a373; --cream:#fff5ec;
-  --teal:#9ad5c9; --ok:#8fcfa8; --lav:#d3c2f2; --mint:#c9ead9;
+  --red:#f27ea6; --red2:#d95f8c; --accL:#f9a9c5; --accXL:#fbd6e3; --cream:#fff5ec; --white:#fff;
+  --seg:#5a3e4f; --dotc:#eedbd0; --g1:rgba(242,126,166,.16); --g2:rgba(211,194,242,.28); --g3:rgba(201,234,217,.35);
+  --teal:#9ad5c9;
   --shadow:0 10px 30px rgba(120,70,90,.12);
   color-scheme:light;
 }
@@ -20,10 +28,10 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 "Chocolate Classical Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   min-height:100vh;-webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(circle at 12% 0%,rgba(242,126,166,.16),transparent 45%),
-    radial-gradient(circle at 92% 8%,rgba(211,194,242,.28),transparent 40%),
-    radial-gradient(circle at 50% 110%,rgba(201,234,217,.35),transparent 45%),
-    radial-gradient(circle at 1px 1px,#eedbd0 1.2px,transparent 0);
+  background-image:radial-gradient(circle at 12% 0%,var(--g1),transparent 45%),
+    radial-gradient(circle at 92% 8%,var(--g2),transparent 40%),
+    radial-gradient(circle at 50% 110%,var(--g3),transparent 45%),
+    radial-gradient(circle at 1px 1px,var(--dotc) 1.2px,transparent 0);
   background-size:100% 100%,100% 100%,100% 100%,24px 24px}
 .wrap{max-width:1040px;margin:0 auto;padding-block:22px 48px;padding-inline:16px}
 .disp{font-family:"Chocolate Classical Sans","Noto Sans TC",system-ui,sans-serif;font-weight:700;letter-spacing:.5px}
@@ -33,7 +41,7 @@ header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);le
 .ed{display:inline-block;min-width:2em;border-radius:8px;padding:0 4px;margin-left:-4px;cursor:text;outline:none;
   border-bottom:2px dashed transparent;transition:border-color .15s,background .15s}
 .ed:hover{border-bottom-color:var(--line2)}
-.ed:focus{border-bottom-color:var(--red);background:rgba(242,126,166,.08)}
+.ed:focus{border-bottom-color:var(--red);background:var(--bg2)}
 .ed:empty:before{content:attr(data-ph);color:inherit;opacity:.45}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:99px;
   background:var(--sur);border:1.5px solid var(--line);color:var(--ink2);font-variant-numeric:tabular-nums}
@@ -47,17 +55,17 @@ header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);le
   background:linear-gradient(180deg,var(--sur),var(--bg2))}
 .box{position:relative;width:min(100%,440px);max-width:100%;aspect-ratio:1}
 #wheel{display:block;width:100%;height:100%;border-radius:50%;
-  box-shadow:0 0 0 8px #fff,0 0 0 14px var(--red),0 0 0 18px var(--cream),0 18px 40px rgba(120,70,90,.28)}
+  box-shadow:0 0 0 8px var(--white),0 0 0 14px var(--red),0 0 0 18px var(--cream),0 18px 40px rgba(60,40,50,.28)}
 .ptr{position:absolute;left:50%;top:-18px;transform:translateX(-50%);z-index:3;width:44px;height:58px;
   filter:drop-shadow(0 5px 6px rgba(0,0,0,.35))}
 .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24%;height:24%;border-radius:50%;z-index:2;
   border:0;cursor:pointer;color:#fff;font-size:clamp(17px,4.4vw,28px);line-height:1;letter-spacing:1.5px;
   display:flex;align-items:center;justify-content:center;padding-left:2px;
-  background:linear-gradient(180deg,#f9a9c5,#f27ea6);
-  box-shadow:0 0 0 6px #fff,0 0 0 8px #fbd6e3,0 7px 0 6px #e3a5be,0 12px 22px rgba(120,70,90,.3);
+  background:linear-gradient(180deg,var(--accL),var(--red));
+  box-shadow:0 0 0 6px var(--white),0 0 0 8px var(--accXL),0 7px 0 6px var(--red2),0 12px 22px rgba(60,40,50,.3);
   transition:transform .1s,box-shadow .1s}
-.hub:hover{background:linear-gradient(180deg,#fbb3cc,#f48bb0)}
-.hub:active{transform:translate(-50%,calc(-50% + 4px));box-shadow:0 0 0 6px #fff,0 0 0 8px #fbd6e3,0 3px 0 6px #e3a5be,0 6px 14px rgba(120,70,90,.3)}
+.hub:hover{filter:brightness(1.05)}
+.hub:active{transform:translate(-50%,calc(-50% + 4px));box-shadow:0 0 0 6px var(--white),0 0 0 8px var(--accXL),0 3px 0 6px var(--red2),0 6px 14px rgba(60,40,50,.3)}
 .hub:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 .hub[disabled]{cursor:wait;filter:saturate(.5)}
 .actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
@@ -86,14 +94,14 @@ header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);le
 .dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 input[type=text],input[type=number]{font:inherit;font-size:14px;background:var(--bg);color:var(--ink);
   border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;width:100%;min-width:0}
-input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,139,141,.18)}
+input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--red);box-shadow:0 0 0 3px var(--accXL)}
 input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 .row.sec-on{grid-template-columns:14px 1fr 66px auto 30px}
 .row .ghost{font:inherit;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px;cursor:pointer;
   background:var(--bg);border:1.5px solid var(--line);color:var(--ink2)}
 .row .ghost.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
 .del{border:0;background:none;color:var(--ink3);font-size:20px;line-height:1;cursor:pointer;padding:4px;border-radius:8px}
-.del:hover{color:var(--red);background:rgba(230,57,70,.1)}
+.del:hover{color:var(--red);background:var(--bg2)}
 .addrow{display:flex;gap:8px;margin-top:10px}
 .addrow input{flex:1}
 .hint{font-size:12px;color:var(--ink3);margin-top:8px}
@@ -101,6 +109,13 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 .opts label{display:flex;align-items:center;gap:8px;cursor:pointer}
 .opts input[type=checkbox]{width:17px;height:17px;accent-color:var(--red)}
 .opts input[type=number]{width:70px}
+.themes-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.themes{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:26px;height:26px;border-radius:50%;border:2px solid #fff;cursor:pointer;padding:0;
+  box-shadow:0 0 0 1.5px var(--swc);transition:transform .1s,box-shadow .1s}
+.sw:hover{transform:scale(1.12)}
+.sw.on{box-shadow:0 0 0 3px var(--swc);transform:scale(1.18)}
+.sw:focus-visible{outline:3px solid var(--red);outline-offset:2px}
 .hist{list-style:none;display:flex;flex-direction:column;gap:6px;max-height:230px;overflow:auto;font-size:14px}
 .hist li{display:flex;justify-content:space-between;gap:8px;padding:6px 11px;border-radius:11px;background:var(--bg);border:1px solid var(--line)}
 .hist li time{color:var(--ink3);font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
@@ -123,7 +138,7 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 <canvas id="confetti"></canvas>
 <div class="wrap">
   <header>
-    <h1 class="disp"><span id="ttl" class="ed" contenteditable="true" spellcheck="false" data-ph="幸運轉轉樂" title="點一下可以改標題"></span><span id="sub" class="ed" contenteditable="true" spellcheck="false" data-ph="自己填獎項，按中間的 GO 就轉" title="點一下可以改說明"></span></h1>
+    <h1 class="disp"><span id="ttl" class="ed" contenteditable="true" spellcheck="false" data-ph="幸運轉盤" title="點一下可以改標題"></span><span id="sub" class="ed" contenteditable="true" spellcheck="false" data-ph="自己填獎項，按中間的 GO 就轉" title="點一下可以改說明"></span></h1>
     <span class="chip" id="cnt"></span>
   </header>
 
@@ -131,8 +146,8 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
     <section class="card stage">
       <div class="box">
         <svg class="ptr" viewBox="0 0 44 58" aria-hidden="true">
-          <path d="M22 56 L3 14 A21 21 0 1 1 41 14 Z" fill="#f27ea6" stroke="#fff" stroke-width="3"/>
-          <path d="M22 26 C18 20 11 21 12 15 C13 10 19 10 22 14 C25 10 31 10 32 15 C33 21 26 20 22 26 Z" fill="#fff"/>
+          <path d="M22 56 L3 14 A21 21 0 1 1 41 14 Z" style="fill:var(--red);stroke:var(--white)" stroke-width="3"/>
+          <path d="M22 26 C18 20 11 21 12 15 C13 10 19 10 22 14 C25 10 31 10 32 15 C33 21 26 20 22 26 Z" style="fill:var(--white)"/>
         </svg>
         <canvas id="wheel" width="900" height="900" aria-label="抽獎轉盤"></canvas>
         <button class="hub disp" id="hub" title="轉一下">GO</button>
@@ -162,6 +177,7 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
           <label><input type="checkbox" id="optRemove"> 抽中後從轉盤移除（不重複中獎）</label>
           <label><input type="checkbox" id="optSound" checked> 轉動音效</label>
           <label>轉動時間 <input type="number" id="optDur" min="2" max="15" step="1" value="6"> 秒</label>
+          <div class="themes-row">風格 <div class="themes" id="themes"></div></div>
         </div>
       </section>
 
@@ -187,12 +203,60 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 <script>
 /* ── 資料 ── */
 const KEY='lucky-wheel-v1';
-const COLORS=['#f9b4cc','#ffd9b0','#c3e8d8','#d6c6f4','#fff1b8','#ffc2c2','#bfe0f5','#f7cfe9',
-              '#f4a3bf','#ffe4c4','#d9f0e4','#e4d8f9','#fff8d6','#ffd6d6','#d6ecfa','#fbe0f1'];
+/* 10 種風格。v 是 CSS 變數，c 是轉盤格子的顏色（依序循環） */
+const THEMES=[
+ {n:'草莓牛奶',v:{bg:'#f8f0e4',bg2:'#f3e6d8',sur:'#fffaf5',line:'#eddccf',line2:'#dcc3b3',ink:'#5a3e4f',ink2:'#8a6f7d',ink3:'#b09aa5',
+   red:'#f27ea6',red2:'#d95f8c',accL:'#f9a9c5',accXL:'#fbd6e3',cream:'#fff5ec',white:'#fff',seg:'#5a3e4f',dotc:'#eedbd0',
+   g1:'rgba(242,126,166,.16)',g2:'rgba(211,194,242,.28)',g3:'rgba(201,234,217,.35)'},
+  c:['#f9b4cc','#ffd9b0','#c3e8d8','#d6c6f4','#fff1b8','#ffc2c2','#bfe0f5','#f7cfe9']},
+ {n:'薰衣草',v:{bg:'#f3eff8',bg2:'#e9e2f3',sur:'#fcfaff',line:'#e0d6ee',line2:'#c9bade',ink:'#4a3d5e',ink2:'#7a6b92',ink3:'#a598b8',
+   red:'#a98be0',red2:'#8c6cc9',accL:'#c5aef0',accXL:'#e6dbf8',cream:'#f6f0ff',white:'#fff',seg:'#4a3d5e',dotc:'#e3dbee',
+   g1:'rgba(169,139,224,.2)',g2:'rgba(242,126,166,.14)',g3:'rgba(191,224,245,.35)'},
+  c:['#d9c8f5','#f5c6e8','#c8d9f8','#e8dcff','#fbe0f1','#cfe5f5','#f0d5ff','#e2ecff']},
+ {n:'薄荷蘇打',v:{bg:'#eef7f3',bg2:'#e0f0e9',sur:'#fafffd',line:'#d3e8df',line2:'#b6d5c8',ink:'#2f4f45',ink2:'#5f7f74',ink3:'#93b0a6',
+   red:'#5fc9b0',red2:'#3faa92',accL:'#8fdccb',accXL:'#cdeee6',cream:'#effbf7',white:'#fff',seg:'#2f4f45',dotc:'#d6e9e1',
+   g1:'rgba(95,201,176,.2)',g2:'rgba(191,224,245,.35)',g3:'rgba(255,241,184,.4)'},
+  c:['#bfeee0','#c9e9f7','#fff3c4','#d8f5ea','#e0f2ff','#fbe7c8','#c5f0e4','#eaf8ff']},
+ {n:'蜜桃',v:{bg:'#fbf1e8',bg2:'#f7e4d5',sur:'#fffaf6',line:'#f0dccb',line2:'#e0c2aa',ink:'#5c3f38',ink2:'#8d6c62',ink3:'#b8988e',
+   red:'#f7a17a',red2:'#e5825a',accL:'#fbc0a2',accXL:'#fde2d3',cream:'#fff5ee',white:'#fff',seg:'#5c3f38',dotc:'#f0dbcc',
+   g1:'rgba(247,161,122,.2)',g2:'rgba(255,214,176,.35)',g3:'rgba(249,180,204,.22)'},
+  c:['#ffd3b8','#ffe6c8','#fbc4c4','#ffefd6','#f9d6e6','#ffdcc2','#fff0e0','#f7cdd8']},
+ {n:'檸檬奶油',v:{bg:'#fbf7e6',bg2:'#f6efd2',sur:'#fffdf5',line:'#efe6c6',line2:'#ddd0a3',ink:'#5b4d2e',ink2:'#8a7a55',ink3:'#b3a683',
+   red:'#f5c542',red2:'#dba82a',accL:'#f9d976',accXL:'#fcedb5',cream:'#fffbea',white:'#fff',seg:'#5b4d2e',dotc:'#efe5c7',
+   g1:'rgba(245,197,66,.2)',g2:'rgba(201,234,217,.35)',g3:'rgba(255,214,176,.35)'},
+  c:['#fff3b0','#ffe7a3','#e3f4c8','#fff9d6','#ffe2b8','#eef7d2','#fdf0c2','#ffefdc']},
+ {n:'天空藍',v:{bg:'#eef4fa',bg2:'#deeaf5',sur:'#fafcff',line:'#d3e2f0',line2:'#b4cce2',ink:'#2f4258',ink2:'#5e7690',ink3:'#93a8bf',
+   red:'#7fb6ee',red2:'#5c98d8',accL:'#a9cdf5',accXL:'#d8e8fa',cream:'#f1f7ff',white:'#fff',seg:'#2f4258',dotc:'#d8e5f0',
+   g1:'rgba(127,182,238,.22)',g2:'rgba(211,194,242,.25)',g3:'rgba(201,234,217,.35)'},
+  c:['#c5dcf8','#dce9ff','#e2d9fb','#cfe8ff','#eaf1ff','#d9f1f7','#d3e3ff','#f0e8ff']},
+ {n:'櫻花',v:{bg:'#fdf4f6',bg2:'#f9e6ec',sur:'#fffbfc',line:'#f2dde4',line2:'#e4c3cf',ink:'#5c3b47',ink2:'#8c6a77',ink3:'#b8979f',
+   red:'#f5a3bd',red2:'#e2809f',accL:'#f9c1d3',accXL:'#fce3ea',cream:'#fff6f9',white:'#fff',seg:'#5c3b47',dotc:'#f3dee5',
+   g1:'rgba(245,163,189,.22)',g2:'rgba(255,241,184,.3)',g3:'rgba(211,194,242,.25)'},
+  c:['#fbd3df','#fde8ef','#f8c4d6','#fff0f4','#f5d9e8','#ffe4ec','#f9cbd9','#fdf1f6']},
+ {n:'莓果',v:{bg:'#f7eef2',bg2:'#f0dfe7',sur:'#fffafc',line:'#e9d2dc',line2:'#d5b3c2',ink:'#4d2438',ink2:'#7e4f64',ink3:'#ab8595',
+   red:'#d9679a',red2:'#b94a7d',accL:'#e88fb7',accXL:'#f4cfe0',cream:'#fbeef4',white:'#fff',seg:'#4d2438',dotc:'#ead6df',
+   g1:'rgba(217,103,154,.2)',g2:'rgba(169,139,224,.2)',g3:'rgba(255,214,176,.3)'},
+  c:['#f3b6cf','#e8c6e6','#fbd2dc','#d9c4ef','#f7c0d4','#f1d7ec','#e3b8d5','#fde2ea']},
+ {n:'抹茶',v:{bg:'#f3f5e9',bg2:'#e8ecd6',sur:'#fbfcf6',line:'#dde3c8',line2:'#c2cba5',ink:'#3d4a2e',ink2:'#6a7a58',ink3:'#9aa88a',
+   red:'#9cc06e',red2:'#7ea350',accL:'#bcd794',accXL:'#e2ecd0',cream:'#f6f9ec',white:'#fff',seg:'#3d4a2e',dotc:'#dfe5cc',
+   g1:'rgba(156,192,110,.22)',g2:'rgba(255,241,184,.35)',g3:'rgba(255,214,176,.3)'},
+  c:['#d6e8b8','#eef4cf','#fff1c2','#dfeccb','#f7e7c6','#e6f0d4','#f3f7dc','#ffe9d0']},
+ {n:'夜櫻',v:{bg:'#2b2330',bg2:'#372c3e',sur:'#3a3042',line:'#4d4056',line2:'#655670',ink:'#f7eef2',ink2:'#cbb9c4',ink3:'#9c8b97',
+   red:'#f48fb3',red2:'#d66a93',accL:'#f8b3cb',accXL:'#6b4a5c',cream:'#4a3b48',white:'#fff4f8',seg:'#4a2c3c',dotc:'#3b3142',
+   g1:'rgba(244,143,179,.14)',g2:'rgba(169,139,224,.16)',g3:'rgba(95,201,176,.12)'},
+  c:['#f4b6cc','#d9c4f0','#ffd9b8','#c8e6e0','#fbd0e0','#e6d2fa','#ffe6cf','#d3eef0']},
+];
+let COLORS=THEMES[0].c;
+function applyTheme(i){
+  const t=THEMES[i]||THEMES[0]; S.theme=THEMES[i]?i:0;
+  Object.entries(t.v).forEach(([k,v])=>document.documentElement.style.setProperty('--'+k,v));
+  COLORS=t.c;
+  document.querySelectorAll('.sw').forEach((b,j)=>b.classList.toggle('on',j===S.theme));
+}
 const DEFAULT=[
   {n:'頭獎',w:1},{n:'二獎',w:2},{n:'三獎',w:3},{n:'再接再厲',w:6},{n:'銘謝惠顧',w:6},{n:'再轉一次',w:2}
 ];
-let S={items:[],hist:[],spun:0,remove:false,sound:true,dur:6,title:'',sub:''};
+let S={items:[],hist:[],spun:0,remove:false,sound:true,dur:6,title:'',sub:'',theme:0};
 try{ const j=JSON.parse(localStorage.getItem(KEY)||'null'); if(j&&Array.isArray(j.items)&&j.items.length>=2) S=Object.assign(S,j); }catch(e){}
 if(S.items.length<2) S.items=DEFAULT.map(x=>({...x}));
 S.items.forEach(x=>{ x.w=Math.max(0,Math.min(999,Math.round(+x.w)||0)); });
@@ -206,7 +270,7 @@ const active=()=>S.items.filter(x=>x.w>0);
 const pool=()=>active().filter(x=>!x.x);
 const totalW=()=>active().reduce((a,b)=>a+b.w,0);
 let secret=false;
-const ink=()=>getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#241f2e';
+const cssVar=k=>getComputedStyle(document.documentElement).getPropertyValue(k).trim();
 
 /* ── 畫 ── */
 function draw(){
@@ -223,13 +287,13 @@ function draw(){
     const a1=a0+Math.PI*2*it.w/tot;
     ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R-4,a0,a1); ctx.closePath();
     ctx.fillStyle=COLORS[S.items.indexOf(it)%COLORS.length]; ctx.fill();
-    ctx.strokeStyle='#fff'; ctx.lineWidth=5; ctx.stroke();
+    ctx.strokeStyle=cssVar('--white'); ctx.lineWidth=5; ctx.stroke();
     ctx.save(); ctx.rotate((a0+a1)/2);
     ctx.textAlign='right'; ctx.textBaseline='middle';
     const span=(a1-a0)*(R*.62);
     const fs=Math.max(18,Math.min(46,span*.55,(R*.6)/Math.max(2,it.n.length)*1.6));
     ctx.font='700 '+fs+'px "Chocolate Classical Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
-    ctx.fillStyle='#5a3e4f';
+    ctx.fillStyle=cssVar('--seg');
     ctx.fillText(it.n,R-46,0,R*.62);
     ctx.restore();
     a0=a1;
@@ -240,7 +304,7 @@ function draw(){
   for(let i=0;i<n;i++){
     const t=i/n*Math.PI*2;
     ctx.beginPath(); ctx.arc(R+Math.cos(t)*(R-14),R+Math.sin(t)*(R-14),5.5,0,Math.PI*2);
-    ctx.fillStyle=i%2?'#fff':'#f27ea6'; ctx.fill();
+    ctx.fillStyle=i%2?cssVar('--white'):cssVar('--red'); ctx.fill();
   }
 }
 /* 指針在正上方，算現在指到誰 */
@@ -400,6 +464,14 @@ function confetti(){
     if(now-t0<2600) requestAnimationFrame(f); else x.clearRect(0,0,c.width,c.height);
   })(t0);
 }
+THEMES.forEach((t,i)=>{
+  const b=document.createElement('button'); b.type='button'; b.className='sw'; b.title=t.n; b.setAttribute('aria-label',t.n);
+  b.style.background='conic-gradient('+t.c[0]+' 0 33%,'+t.c[1]+' 0 66%,'+t.c[2]+' 0)';
+  b.style.setProperty('--swc',t.v.red);
+  b.onclick=()=>{ applyTheme(i); save(); draw(); };
+  $('themes').appendChild(b);
+});
+applyTheme(S.theme|0);
 render();
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
 </script>
