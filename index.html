@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>幸運轉轉樂</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chocolate+Classical+Sans&family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
 /* 少女系：米色底、粉嫩配色。刻意只做一套淺色，深色模式也維持米色 */
 :root{
@@ -18,7 +18,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
+body{background:var(--bg);color:var(--ink);font:15px/1.6 "Chocolate Classical Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   min-height:100vh;-webkit-font-smoothing:antialiased;
   background-image:radial-gradient(circle at 12% 0%,rgba(242,126,166,.16),transparent 45%),
     radial-gradient(circle at 92% 8%,rgba(211,194,242,.28),transparent 40%),
@@ -26,11 +26,15 @@ body{background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC","PingFan
     radial-gradient(circle at 1px 1px,#eedbd0 1.2px,transparent 0);
   background-size:100% 100%,100% 100%,100% 100%,24px 24px}
 .wrap{max-width:1040px;margin:0 auto;padding-block:22px 48px;padding-inline:16px}
-.disp{font-family:"Baloo 2","Noto Sans TC",system-ui,sans-serif;font-weight:800;letter-spacing:.3px}
+.disp{font-family:"Chocolate Classical Sans","Noto Sans TC",system-ui,sans-serif;font-weight:700;letter-spacing:.5px}
 header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 header h1{font-size:clamp(28px,5vw,38px);line-height:1.1;color:var(--red);text-wrap:balance}
-header h1 span{display:block;font-size:13px;font-weight:500;color:var(--ink3);letter-spacing:1px;
-  font-family:"Noto Sans TC",system-ui,sans-serif;margin-top:6px}
+header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);letter-spacing:1px;margin-top:6px}
+.ed{display:inline-block;min-width:2em;border-radius:8px;padding:0 4px;margin-left:-4px;cursor:text;outline:none;
+  border-bottom:2px dashed transparent;transition:border-color .15s,background .15s}
+.ed:hover{border-bottom-color:var(--line2)}
+.ed:focus{border-bottom-color:var(--red);background:rgba(242,126,166,.08)}
+.ed:empty:before{content:attr(data-ph);color:inherit;opacity:.45}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:99px;
   background:var(--sur);border:1.5px solid var(--line);color:var(--ink2);font-variant-numeric:tabular-nums}
 
@@ -46,10 +50,16 @@ header h1 span{display:block;font-size:13px;font-weight:500;color:var(--ink3);le
   box-shadow:0 0 0 8px #fff,0 0 0 14px var(--red),0 0 0 18px var(--cream),0 18px 40px rgba(120,70,90,.28)}
 .ptr{position:absolute;left:50%;top:-18px;transform:translateX(-50%);z-index:3;width:44px;height:58px;
   filter:drop-shadow(0 5px 6px rgba(0,0,0,.35))}
-.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24%;height:24%;border-radius:50%;z-index:2;
-  border:0;cursor:pointer;color:#fff;font-size:clamp(15px,4vw,24px);text-shadow:0 2px 0 rgba(0,0,0,.15);
-  background:radial-gradient(circle at 35% 30%,#ffd4e3,var(--red) 55%,var(--red2));
-  box-shadow:0 0 0 5px #fff,0 8px 0 var(--red2),0 12px 24px rgba(120,70,90,.35);transition:transform .1s}
+.hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:26%;height:26%;border-radius:50%;z-index:2;
+  border:0;cursor:pointer;color:#fff;font-size:clamp(16px,4.2vw,26px);line-height:1;letter-spacing:1px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  text-shadow:0 2px 0 rgba(180,80,120,.35);
+  background:linear-gradient(180deg,#fdd0df 0%,#f9a9c5 55%,#f27ea6 100%);
+  box-shadow:0 0 0 5px #fff,0 0 0 9px #fbd6e3,0 8px 0 #e08bb0,0 8px 0 5px #fff,0 14px 26px rgba(120,70,90,.3);
+  transition:transform .1s}
+.hub:before{content:"";position:absolute;inset:11%;border-radius:50%;border:2px dashed rgba(255,255,255,.85);pointer-events:none}
+.hub:after{content:"";position:absolute;left:24%;top:14%;width:26%;height:14%;border-radius:50%;background:rgba(255,255,255,.55);transform:rotate(-20deg);pointer-events:none}
+.hub .hrt{font-size:.55em;line-height:1;opacity:.95}
 .hub:active{transform:translate(-50%,-50%) scale(.93)}
 .hub:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 .hub[disabled]{cursor:wait;filter:saturate(.5)}
@@ -66,22 +76,22 @@ header h1 span{display:block;font-size:13px;font-weight:500;color:var(--ink3);le
 .btn.flat{background:transparent;box-shadow:none;border-color:var(--line);color:var(--ink2)}
 .btn.flat:hover{color:var(--ink);border-color:var(--line2)}
 .btn[disabled]{opacity:.5;cursor:not-allowed;filter:none;transform:none}
-.count{font-size:13px;color:var(--ink3)}
+.count{font-size:13px;color:var(--ink3);user-select:none}
 .count b{color:var(--red);font-variant-numeric:tabular-nums}
 
 /* 側欄 */
 .side{display:flex;flex-direction:column;gap:18px}
 .sec{padding:16px 16px 14px}
 .sec h2{font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
-.sec h2 small{color:var(--ink3);font-size:12px;font-weight:500;font-family:"Noto Sans TC",system-ui,sans-serif}
+.sec h2 small{color:var(--ink3);font-size:12px;font-weight:400}
 .list{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
-.row{display:grid;grid-template-columns:14px 1fr 66px 30px;gap:8px;align-items:center}
+.row{display:grid;grid-template-columns:14px 1fr 30px;gap:8px;align-items:center}
 .dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 input[type=text],input[type=number]{font:inherit;font-size:14px;background:var(--bg);color:var(--ink);
   border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;width:100%;min-width:0}
 input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,139,141,.18)}
 input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
-.row.sec-on{grid-template-columns:14px 1fr 66px auto 30px}
+.row.sec-on{grid-template-columns:14px 1fr auto 30px}
 .row .ghost{font:inherit;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px;cursor:pointer;
   background:var(--bg);border:1.5px solid var(--line);color:var(--ink2)}
 .row .ghost.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
@@ -116,7 +126,7 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 <canvas id="confetti"></canvas>
 <div class="wrap">
   <header>
-    <h1 class="disp">幸運轉轉樂<span>自己填獎項，按中間的 GO 就轉</span></h1>
+    <h1 class="disp"><span id="ttl" class="ed" contenteditable="true" spellcheck="false" data-ph="幸運轉轉樂" title="點一下可以改標題"></span><span id="sub" class="ed" contenteditable="true" spellcheck="false" data-ph="自己填獎項，按中間的 GO 就轉" title="點一下可以改說明"></span></h1>
     <span class="chip" id="cnt"></span>
   </header>
 
@@ -128,7 +138,7 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
           <path d="M22 26 C18 20 11 21 12 15 C13 10 19 10 22 14 C25 10 31 10 32 15 C33 21 26 20 22 26 Z" fill="#fff"/>
         </svg>
         <canvas id="wheel" width="900" height="900" aria-label="抽獎轉盤"></canvas>
-        <button class="hub disp" id="hub" title="轉一下">GO</button>
+        <button class="hub disp" id="hub" title="轉一下"><span>GO</span><span class="hrt">♥</span></button>
       </div>
       <div class="actions">
         <button class="btn main" id="spinBtn">開始抽獎</button>
@@ -139,15 +149,14 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 
     <div class="side">
       <section class="card sec">
-        <h2 class="disp">獎項 <small>權重越大越容易中</small></h2>
+        <h2 class="disp">獎項 <small>每格一樣大，同名多加幾個就更容易中</small></h2>
         <div class="list" id="list"></div>
         <div class="addrow">
           <input type="text" id="newName" placeholder="新增獎項名稱" maxlength="20">
           <button class="btn sm" id="addBtn">＋ 新增</button>
         </div>
-        <p class="hint">最少 2 個、最多 24 個。權重填 0 就暫時不會被抽到。</p>
+        <p class="hint">最少 2 個、最多 36 個。想讓某個獎更容易中，就多加幾個同名的。</p>
         <div class="addrow">
-          <button class="btn sm flat" id="evenBtn">權重全設 1</button>
           <button class="btn sm flat" id="defaultBtn">還原預設</button>
         </div>
       </section>
@@ -186,11 +195,13 @@ const KEY='lucky-wheel-v1';
 const COLORS=['#f9b4cc','#ffd9b0','#c3e8d8','#d6c6f4','#fff1b8','#ffc2c2','#bfe0f5','#f7cfe9',
               '#f4a3bf','#ffe4c4','#d9f0e4','#e4d8f9','#fff8d6','#ffd6d6','#d6ecfa','#fbe0f1'];
 const DEFAULT=[
-  {n:'頭獎',w:1},{n:'二獎',w:2},{n:'三獎',w:3},{n:'再接再厲',w:6},{n:'銘謝惠顧',w:6},{n:'再轉一次',w:2}
+  {n:'頭獎',w:1},{n:'二獎',w:1},{n:'三獎',w:1},{n:'銘謝惠顧',w:1},{n:'銘謝惠顧',w:1},{n:'再轉一次',w:1}
 ];
-let S={items:[],hist:[],spun:0,remove:false,sound:true,dur:6};
+let S={items:[],hist:[],spun:0,remove:false,sound:true,dur:6,title:'',sub:''};
 try{ const j=JSON.parse(localStorage.getItem(KEY)||'null'); if(j&&Array.isArray(j.items)&&j.items.length>=2) S=Object.assign(S,j); }catch(e){}
 if(S.items.length<2) S.items=DEFAULT.map(x=>({...x}));
+/* 沒有權重了，每一格一樣大。舊資料的權重一律當 1 */
+S.items.forEach(x=>{ x.w=1; });
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };
 
 const $=id=>document.getElementById(id);
@@ -223,7 +234,7 @@ function draw(){
     ctx.textAlign='right'; ctx.textBaseline='middle';
     const span=(a1-a0)*(R*.62);
     const fs=Math.max(18,Math.min(46,span*.55,(R*.6)/Math.max(2,it.n.length)*1.6));
-    ctx.font='700 '+fs+'px "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
+    ctx.font='700 '+fs+'px "Chocolate Classical Sans","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
     ctx.fillStyle='#5a3e4f';
     ctx.fillText(it.n,R-46,0,R*.62);
     ctx.restore();
@@ -265,7 +276,7 @@ const fanfare=()=>[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.25,.1
 function spin(){
   if(busy) return;
   const items=active(),P=pool();
-  if(items.length<2){ alert('至少要有 2 個權重大於 0 的獎項'); return; }
+  if(items.length<2){ alert('至少要有 2 個獎項'); return; }
   if(!P.length){ alert('至少要有 1 個抽得到的獎項'); return; }
   busy=true; $('hub').disabled=true; $('spinBtn').disabled=true;
   /* 先在抽得到的獎項裡按權重抽出結果，再讓轉盤停進那一格，機率才真的等於權重。
@@ -295,7 +306,7 @@ function done(){
   busy=false; $('hub').disabled=false; $('spinBtn').disabled=false;
   const got=pick();
   S.spun++; S.hist.unshift({n:got.n,t:Date.now()}); if(S.hist.length>100) S.hist.length=100;
-  if(S.remove) got.w=0;
+  if(S.remove&&S.items.length>1) S.items.splice(S.items.indexOf(got),1);   /* 只拿掉這一格，同名的其他格留著 */
   save(); render();
   $('prizeTxt').textContent=got.n; $('mask').hidden=false; $('againBtn').focus();
   fanfare(); confetti();
@@ -307,10 +318,10 @@ function render(){
   S.items.forEach((it,i)=>{
     const row=document.createElement('div'); row.className='row';
     row.innerHTML='<span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+
-      '<input type="text" maxlength="20" aria-label="獎項名稱"><input type="number" min="0" max="999" step="1" aria-label="權重">'+
+      '<input type="text" maxlength="20" aria-label="獎項名稱">'+
       '<button class="del" title="刪除" aria-label="刪除">×</button>';
-    const [name,w]=row.querySelectorAll('input');
-    name.id='name'+i; w.id='w'+i; name.value=it.n; w.value=it.w;
+    const name=row.querySelector('input');
+    name.id='name'+i; name.value=it.n;
     if(secret){
       row.classList.add('sec-on');
       const b=document.createElement('button'); b.type='button'; b.className='ghost'+(it.x?' on':'');
@@ -319,7 +330,6 @@ function render(){
       row.insertBefore(b,row.querySelector('.del'));
     }
     name.oninput=()=>{ it.n=name.value.trim()||('獎項'+(i+1)); save(); draw(); updCnt(); };
-    w.onchange=()=>{ it.w=Math.max(0,Math.min(999,Math.round(+w.value)||0)); w.value=it.w; save(); draw(); updCnt(); };
     row.querySelector('.del').onclick=()=>{
       if(S.items.length<=2){ alert('至少要留 2 個獎項'); return; }
       S.items.splice(i,1); save(); render();
@@ -338,22 +348,31 @@ function render(){
   $('optRemove').checked=!!S.remove; $('optSound').checked=S.sound!==false; $('optDur').value=S.dur||6;
   updCnt(); draw();
 }
-function updCnt(){ const a=active(),tot=totalW(); $('cnt').textContent=a.length+' 個獎項'+(tot?'　總權重 '+tot:''); }
+function updCnt(){ $('cnt').textContent=active().length+' 個獎項'; }
 const closeModal=()=>{ $('mask').hidden=true; };
 
-/* 隱藏設定：標題快速點 5 下切換。關著的時候頁面上完全看不出來 */
+/* 標題跟說明直接點著改，存起來下次還在 */
+[['ttl','title'],['sub','sub']].forEach(([id,key])=>{
+  const el=$(id); el.textContent=S[key]||'';
+  el.oninput=()=>{ S[key]=el.textContent.replace(/\n/g,' ').trim().slice(0,60); save(); if(key==='title') document.title=S.title||el.dataset.ph; };
+  el.onkeydown=e=>{ if(e.key==='Enter'){ e.preventDefault(); el.blur(); } };
+  el.onpaste=e=>{ e.preventDefault(); document.execCommand('insertText',false,(e.clipboardData.getData('text')||'').replace(/\n/g,' ')); };
+  el.onblur=()=>{ el.textContent=S[key]||''; };   /* 清掉多餘的換行或格式 */
+});
+document.title=S.title||$('ttl').dataset.ph;
+
+/* 隱藏設定：「已抽 N 次」那行字快速點 5 下切換。關著的時候頁面上完全看不出來 */
 let taps=[];
-document.querySelector('header h1').addEventListener('click',()=>{
+document.querySelector('.count').addEventListener('click',()=>{
   const now=Date.now(); taps=taps.filter(t=>now-t<2000); taps.push(now);
   if(taps.length>=5){ taps=[]; secret=!secret; render(); }
 });
 $('addBtn').onclick=()=>{
   const v=$('newName').value.trim(); if(!v){ $('newName').focus(); return; }
-  if(S.items.length>=24){ alert('最多 24 個獎項'); return; }
+  if(S.items.length>=36){ alert('最多 36 個獎項'); return; }
   S.items.push({n:v,w:1}); $('newName').value=''; save(); render();
 };
 $('newName').onkeydown=e=>{ if(e.key==='Enter') $('addBtn').click(); };
-$('evenBtn').onclick=()=>{ S.items.forEach(x=>x.w=1); save(); render(); };
 $('defaultBtn').onclick=()=>{ if(confirm('還原成預設獎項？')){ S.items=DEFAULT.map(x=>({...x})); save(); render(); } };
 $('optRemove').onchange=e=>{ S.remove=e.target.checked; save(); };
 $('optSound').onchange=e=>{ S.sound=e.target.checked; save(); };
@@ -366,7 +385,7 @@ $('againBtn').onclick=()=>{ closeModal(); setTimeout(spin,120); };
 $('mask').onclick=e=>{ if(e.target===$('mask')) closeModal(); };
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape') closeModal();
-  if(e.key===' '&&!/INPUT|BUTTON/.test(document.activeElement.tagName)){ e.preventDefault(); if($('mask').hidden) spin(); }
+  if(e.key===' '&&!/INPUT|BUTTON/.test(document.activeElement.tagName)&&!document.activeElement.isContentEditable){ e.preventDefault(); if($('mask').hidden) spin(); }
 });
 
 /* ── 彩帶 ── */
@@ -388,6 +407,7 @@ function confetti(){
   })(t0);
 }
 render();
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(draw);
 </script>
 </body>
 </html>
