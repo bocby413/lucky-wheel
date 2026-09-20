@@ -82,13 +82,13 @@ header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);le
 .sec h2{font-size:16px;display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
 .sec h2 small{color:var(--ink3);font-size:12px;font-weight:400}
 .list{display:flex;flex-direction:column;gap:8px;max-height:340px;overflow:auto}
-.row{display:grid;grid-template-columns:14px 1fr 30px;gap:8px;align-items:center}
+.row{display:grid;grid-template-columns:14px 1fr 66px 30px;gap:8px;align-items:center}
 .dot{width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.7);box-shadow:0 0 0 1px var(--line2)}
 input[type=text],input[type=number]{font:inherit;font-size:14px;background:var(--bg);color:var(--ink);
   border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;width:100%;min-width:0}
 input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,139,141,.18)}
 input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
-.row.sec-on{grid-template-columns:14px 1fr auto 30px}
+.row.sec-on{grid-template-columns:14px 1fr 66px auto 30px}
 .row .ghost{font:inherit;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px;cursor:pointer;
   background:var(--bg);border:1.5px solid var(--line);color:var(--ink2)}
 .row .ghost.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
@@ -190,13 +190,12 @@ const KEY='lucky-wheel-v1';
 const COLORS=['#f9b4cc','#ffd9b0','#c3e8d8','#d6c6f4','#fff1b8','#ffc2c2','#bfe0f5','#f7cfe9',
               '#f4a3bf','#ffe4c4','#d9f0e4','#e4d8f9','#fff8d6','#ffd6d6','#d6ecfa','#fbe0f1'];
 const DEFAULT=[
-  {n:'頭獎',w:1},{n:'二獎',w:1},{n:'三獎',w:1},{n:'銘謝惠顧',w:1},{n:'銘謝惠顧',w:1},{n:'再轉一次',w:1}
+  {n:'頭獎',w:1},{n:'二獎',w:2},{n:'三獎',w:3},{n:'再接再厲',w:6},{n:'銘謝惠顧',w:6},{n:'再轉一次',w:2}
 ];
 let S={items:[],hist:[],spun:0,remove:false,sound:true,dur:6,title:'',sub:''};
 try{ const j=JSON.parse(localStorage.getItem(KEY)||'null'); if(j&&Array.isArray(j.items)&&j.items.length>=2) S=Object.assign(S,j); }catch(e){}
 if(S.items.length<2) S.items=DEFAULT.map(x=>({...x}));
-/* 沒有權重了，每一格一樣大。舊資料的權重一律當 1 */
-S.items.forEach(x=>{ x.w=1; });
+S.items.forEach(x=>{ x.w=Math.max(0,Math.min(999,Math.round(+x.w)||0)); });
 const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} };
 
 const $=id=>document.getElementById(id);
@@ -271,7 +270,7 @@ const fanfare=()=>[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.25,.1
 function spin(){
   if(busy) return;
   const items=active(),P=pool();
-  if(items.length<2){ alert('至少要有 2 個獎項'); return; }
+  if(items.length<2){ alert('至少要有 2 個權重大於 0 的獎項'); return; }
   if(!P.length){ alert('至少要有 1 個抽得到的獎項'); return; }
   busy=true; $('hub').disabled=true; $('spinBtn').disabled=true;
   /* 先在抽得到的獎項裡按權重抽出結果，再讓轉盤停進那一格，機率才真的等於權重。
@@ -313,10 +312,10 @@ function render(){
   S.items.forEach((it,i)=>{
     const row=document.createElement('div'); row.className='row';
     row.innerHTML='<span class="dot" style="background:'+COLORS[i%COLORS.length]+'"></span>'+
-      '<input type="text" maxlength="20" aria-label="獎項名稱">'+
+      '<input type="text" maxlength="20" aria-label="獎項名稱"><input type="number" min="0" max="999" step="1" aria-label="權重" title="權重，越大越容易中；0 不會出現在轉盤上">'+
       '<button class="del" title="刪除" aria-label="刪除">×</button>';
-    const name=row.querySelector('input');
-    name.id='name'+i; name.value=it.n;
+    const [name,w]=row.querySelectorAll('input');
+    name.id='name'+i; w.id='w'+i; name.value=it.n; w.value=it.w;
     if(secret){
       row.classList.add('sec-on');
       const b=document.createElement('button'); b.type='button'; b.className='ghost'+(it.x?' on':'');
@@ -325,6 +324,7 @@ function render(){
       row.insertBefore(b,row.querySelector('.del'));
     }
     name.oninput=()=>{ it.n=name.value.trim()||('獎項'+(i+1)); save(); draw(); updCnt(); };
+    w.onchange=()=>{ it.w=Math.max(0,Math.min(999,Math.round(+w.value)||0)); w.value=it.w; save(); draw(); updCnt(); };
     row.querySelector('.del').onclick=()=>{
       if(S.items.length<=2){ alert('至少要留 2 個獎項'); return; }
       S.items.splice(i,1); save(); render();
