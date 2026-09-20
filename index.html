@@ -139,7 +139,6 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
       </div>
       <div class="actions">
         <button class="btn main" id="spinBtn">開始抽獎</button>
-        <button class="btn flat" id="resetBtn">歸零角度</button>
       </div>
       <div class="count">已抽 <b id="spun">0</b> 次</div>
     </section>
@@ -376,7 +375,6 @@ $('optSound').onchange=e=>{ S.sound=e.target.checked; save(); };
 $('optDur').onchange=e=>{ S.dur=Math.max(2,Math.min(15,+e.target.value||6)); e.target.value=S.dur; save(); };
 $('clearHist').onclick=()=>{ if(S.hist.length&&confirm('清除所有紀錄？')){ S.hist=[]; S.spun=0; save(); render(); } };
 $('spinBtn').onclick=spin; $('hub').onclick=spin;
-$('resetBtn').onclick=()=>{ if(!busy){ angle=0; draw(); } };
 $('closeBtn').onclick=closeModal;
 $('againBtn').onclick=()=>{ closeModal(); setTimeout(spin,120); };
 $('mask').onclick=e=>{ if(e.target===$('mask')) closeModal(); };
