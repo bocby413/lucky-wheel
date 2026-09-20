@@ -43,6 +43,7 @@ header h1 #sub{display:block;font-size:14px;font-weight:400;color:var(--ink3);le
 .ed:hover{border-bottom-color:var(--line2)}
 .ed:focus{border-bottom-color:var(--red);background:var(--bg2)}
 .ed:empty:before{content:attr(data-ph);color:inherit;opacity:.45}
+.hdr-r{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;padding:5px 12px;border-radius:99px;
   background:var(--sur);border:1.5px solid var(--line);color:var(--ink2);font-variant-numeric:tabular-nums}
 
@@ -139,7 +140,10 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 <div class="wrap">
   <header>
     <h1 class="disp"><span id="ttl" class="ed" contenteditable="true" spellcheck="false" data-ph="幸運轉盤" title="點一下可以改標題"></span><span id="sub" class="ed" contenteditable="true" spellcheck="false" data-ph="自己填獎項，按中間的 GO 就轉" title="點一下可以改說明"></span></h1>
-    <span class="chip" id="cnt"></span>
+    <div class="hdr-r">
+      <span class="chip" id="cnt"></span>
+      <button class="btn sm flat" id="reloadBtn" title="重新載入最新版，設定不會不見">↻ 重新整理</button>
+    </div>
   </header>
 
   <div class="grid">
@@ -428,6 +432,8 @@ document.querySelector('.count').addEventListener('click',()=>{
   const now=Date.now(); taps=taps.filter(t=>now-t<2000); taps.push(now);
   if(taps.length>=5){ taps=[]; secret=!secret; render(); }
 });
+/* 加到主畫面之後沒有網址列，靠這顆抓新版。設定都在 localStorage，重新載入不會動到 */
+$('reloadBtn').onclick=()=>location.reload();
 $('addBtn').onclick=()=>{
   const v=$('newName').value.trim(); if(!v){ $('newName').focus(); return; }
   if(S.items.length>=36){ alert('最多 36 個獎項'); return; }
