@@ -186,7 +186,7 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
       </section>
 
       <section class="card sec">
-        <h2 class="disp">紀錄 <button class="btn sm flat" id="clearHist">清除</button></h2>
+        <h2 class="disp"><span id="histTtl" style="user-select:none">紀錄</span> <button class="btn sm flat" id="clearHist">清除</button></h2>
         <ul class="hist" id="hist"></ul>
       </section>
     </div>
@@ -426,11 +426,20 @@ const closeModal=()=>{ $('mask').hidden=true; };
 });
 document.title=S.title||$('ttl').dataset.ph;
 
-/* 隱藏設定：「已抽 N 次」那行字快速點 5 下切換。關著的時候頁面上完全看不出來 */
-let taps=[];
+/* 隱藏設定分兩段：先在「已抽 N 次」快速點 5 下（20 秒內有效），再去點「紀錄」兩個字 5 下才會打開。
+   打開之後，點「紀錄」一下就關掉回到正常。關著的時候頁面上完全看不出來 */
+let taps=[],htaps=[],armed=0;
 document.querySelector('.count').addEventListener('click',()=>{
+  if(secret) return;
   const now=Date.now(); taps=taps.filter(t=>now-t<2000); taps.push(now);
-  if(taps.length>=5){ taps=[]; secret=!secret; render(); }
+  if(taps.length>=5){ taps=[]; armed=now; htaps=[]; }
+});
+$('histTtl').addEventListener('click',()=>{
+  if(secret){ secret=false; armed=0; htaps=[]; render(); return; }
+  const now=Date.now();
+  if(!armed||now-armed>20000){ armed=0; htaps=[]; return; }
+  htaps=htaps.filter(t=>now-t<2000); htaps.push(now);
+  if(htaps.length>=5){ htaps=[]; armed=0; secret=true; render(); }
 });
 /* 加到主畫面之後沒有網址列，靠這顆抓新版。設定都在 localStorage，重新載入不會動到 */
 $('reloadBtn').onclick=()=>location.reload();
