@@ -94,6 +94,10 @@ input[type=text],input[type=number]{font:inherit;font-size:14px;background:var(-
   border:1.5px solid var(--line);border-radius:11px;padding:8px 10px;width:100%;min-width:0}
 input[type=text]:focus,input[type=number]:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,139,141,.18)}
 input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
+.row.sec-on{grid-template-columns:14px 1fr 66px auto 30px}
+.row .ghost{font:inherit;font-size:12px;font-weight:700;padding:5px 9px;border-radius:9px;cursor:pointer;
+  background:var(--bg);border:1.5px solid var(--line);color:var(--ink2)}
+.row .ghost.on{background:var(--ink);color:var(--sur);border-color:var(--ink)}
 .del{border:0;background:none;color:var(--ink3);font-size:20px;line-height:1;cursor:pointer;padding:4px;border-radius:8px}
 .del:hover{color:var(--red);background:rgba(230,57,70,.1)}
 .addrow{display:flex;gap:8px;margin-top:10px}
@@ -205,8 +209,11 @@ const save=()=>{ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
 const $=id=>document.getElementById(id);
 const cv=$('wheel'),ctx=cv.getContext('2d'),R=cv.width/2;
 let angle=0,busy=false;
+/* active：畫在轉盤上的格子（含只展示的）。pool：真的抽得到的 */
 const active=()=>S.items.filter(x=>x.w>0);
+const pool=()=>active().filter(x=>!x.x);
 const totalW=()=>active().reduce((a,b)=>a+b.w,0);
+let secret=false;
 const ink=()=>getComputedStyle(document.documentElement).getPropertyValue('--ink').trim()||'#241f2e';
 
 /* ── 畫 ── */
@@ -270,12 +277,16 @@ const fanfare=()=>[523,659,784,1046].forEach((f,i)=>setTimeout(()=>beep(f,.25,.1
 /* ── 轉 ── */
 function spin(){
   if(busy) return;
-  const items=active();
+  const items=active(),P=pool();
   if(items.length<2){ alert('至少要有 2 個權重大於 0 的獎項'); return; }
+  if(!P.length){ alert('至少要有 1 個抽得到的獎項'); return; }
   busy=true; $('hub').disabled=true; $('spinBtn').disabled=true;
-  /* 先按權重抽出結果，再讓轉盤停進那一格，機率才真的等於權重 */
-  const tot=totalW(); let r=Math.random()*tot,win=items[0],a0=0;
-  for(const it of items){ if(r<it.w){ win=it; break; } r-=it.w; a0+=Math.PI*2*it.w/tot; }
+  /* 先在抽得到的獎項裡按權重抽出結果，再讓轉盤停進那一格，機率才真的等於權重。
+     只展示的格子不在抽的名單裡，所以永遠停不進去 */
+  const tot=totalW(),ptot=P.reduce((a,b)=>a+b.w,0);
+  let r=Math.random()*ptot,win=P[0];
+  for(const it of P){ if(r<it.w){ win=it; break; } r-=it.w; }
+  let a0=0; for(const it of items){ if(it===win) break; a0+=Math.PI*2*it.w/tot; }
   const seg=Math.PI*2*win.w/tot;
   const target=a0+seg*(0.12+Math.random()*0.76);
   let cur=angle%(Math.PI*2); if(cur<0)cur+=Math.PI*2;
@@ -313,6 +324,13 @@ function render(){
       '<button class="del" title="刪除" aria-label="刪除">×</button>';
     const [name,w]=row.querySelectorAll('input');
     name.id='name'+i; w.id='w'+i; name.value=it.n; w.value=it.w;
+    if(secret){
+      row.classList.add('sec-on');
+      const b=document.createElement('button'); b.type='button'; b.className='ghost'+(it.x?' on':'');
+      b.title='只展示、不會中'; b.textContent=it.x?'不中':'會中';
+      b.onclick=()=>{ it.x=!it.x; save(); render(); };
+      row.insertBefore(b,row.querySelector('.del'));
+    }
     name.oninput=()=>{ it.n=name.value.trim()||('獎項'+(i+1)); save(); draw(); updCnt(); };
     w.onchange=()=>{ it.w=Math.max(0,Math.min(999,Math.round(+w.value)||0)); w.value=it.w; save(); draw(); updCnt(); };
     row.querySelector('.del').onclick=()=>{
@@ -336,6 +354,12 @@ function render(){
 function updCnt(){ const a=active(),tot=totalW(); $('cnt').textContent=a.length+' 個獎項'+(tot?'　總權重 '+tot:''); }
 const closeModal=()=>{ $('mask').hidden=true; };
 
+/* 隱藏設定：標題快速點 5 下切換。關著的時候頁面上完全看不出來 */
+let taps=[];
+document.querySelector('header h1').addEventListener('click',()=>{
+  const now=Date.now(); taps=taps.filter(t=>now-t<2000); taps.push(now);
+  if(taps.length>=5){ taps=[]; secret=!secret; render(); }
+});
 $('addBtn').onclick=()=>{
   const v=$('newName').value.trim(); if(!v){ $('newName').focus(); return; }
   if(S.items.length>=24){ alert('最多 24 個獎項'); return; }
