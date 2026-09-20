@@ -7,37 +7,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Noto+Sans+TC:wght@400;500;700&display=swap">
 <style>
+/* 少女系：米色底、粉嫩配色。刻意只做一套淺色，深色模式也維持米色 */
 :root{
-  --bg:#f3ede2; --bg2:#e9e1d1; --sur:#fffcf6; --line:#d9cfba; --line2:#bfb39a;
-  --ink:#241f2e; --ink2:#5d566b; --ink3:#8a8395;
-  --red:#e63946; --red2:#b8202c; --gold:#f2a400; --gold2:#c98300; --cream:#fff2c8;
-  --teal:#0f8b8d; --ok:#2a9d5c;
-  --shadow:0 10px 30px rgba(60,40,20,.14);
+  --bg:#f8f0e4; --bg2:#f3e6d8; --sur:#fffaf5; --line:#eddccf; --line2:#dcc3b3;
+  --ink:#5a3e4f; --ink2:#8a6f7d; --ink3:#b09aa5;
+  --red:#f27ea6; --red2:#d95f8c; --gold:#f9c99a; --gold2:#e8a373; --cream:#fff5ec;
+  --teal:#9ad5c9; --ok:#8fcfa8; --lav:#d3c2f2; --mint:#c9ead9;
+  --shadow:0 10px 30px rgba(120,70,90,.12);
   color-scheme:light;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --bg:#16141c; --bg2:#1f1c27; --sur:#242130; --line:#3a3547; --line2:#524c63;
-    --ink:#f4efe6; --ink2:#c2bbcf; --ink3:#8d8699;
-    --red:#ff5a66; --red2:#c8303d; --gold:#ffbd2e; --gold2:#d99400; --cream:#fff2c8;
-    --teal:#2fc4c6; --ok:#4cc57e;
-    --shadow:0 10px 30px rgba(0,0,0,.45);
-    color-scheme:dark;
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#16141c; --bg2:#1f1c27; --sur:#242130; --line:#3a3547; --line2:#524c63;
-  --ink:#f4efe6; --ink2:#c2bbcf; --ink3:#8d8699;
-  --red:#ff5a66; --red2:#c8303d; --gold:#ffbd2e; --gold2:#d99400; --cream:#fff2c8;
-  --teal:#2fc4c6; --ok:#4cc57e;
-  --shadow:0 10px 30px rgba(0,0,0,.45);
-  color-scheme:dark;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--bg);color:var(--ink);font:15px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
   min-height:100vh;-webkit-font-smoothing:antialiased;
-  background-image:radial-gradient(circle at 1px 1px,var(--line) 1px,transparent 0);background-size:26px 26px}
+  background-image:radial-gradient(circle at 12% 0%,rgba(242,126,166,.16),transparent 45%),
+    radial-gradient(circle at 92% 8%,rgba(211,194,242,.28),transparent 40%),
+    radial-gradient(circle at 50% 110%,rgba(201,234,217,.35),transparent 45%),
+    radial-gradient(circle at 1px 1px,#eedbd0 1.2px,transparent 0);
+  background-size:100% 100%,100% 100%,100% 100%,24px 24px}
 .wrap{max-width:1040px;margin:0 auto;padding-block:22px 48px;padding-inline:16px}
 .disp{font-family:"Baloo 2","Noto Sans TC",system-ui,sans-serif;font-weight:800;letter-spacing:.3px}
 header{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
@@ -49,20 +36,20 @@ header h1 span{display:block;font-size:13px;font-weight:500;color:var(--ink3);le
 
 .grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);gap:22px;align-items:start}
 @media (max-width:820px){.grid{grid-template-columns:1fr}}
-.card{background:var(--sur);border:1.5px solid var(--line);border-radius:22px;box-shadow:var(--shadow)}
+.card{background:var(--sur);border:1.5px solid var(--line);border-radius:28px;box-shadow:var(--shadow)}
 
 /* 轉盤舞台 */
 .stage{padding:26px 18px 22px;display:flex;flex-direction:column;align-items:center;gap:18px;
   background:linear-gradient(180deg,var(--sur),var(--bg2))}
 .box{position:relative;width:min(100%,440px);max-width:100%;aspect-ratio:1}
 #wheel{display:block;width:100%;height:100%;border-radius:50%;
-  box-shadow:0 0 0 8px var(--red),0 0 0 12px var(--gold),0 18px 40px rgba(0,0,0,.35)}
+  box-shadow:0 0 0 8px #fff,0 0 0 14px var(--red),0 0 0 18px var(--cream),0 18px 40px rgba(120,70,90,.28)}
 .ptr{position:absolute;left:50%;top:-18px;transform:translateX(-50%);z-index:3;width:44px;height:58px;
   filter:drop-shadow(0 5px 6px rgba(0,0,0,.35))}
 .hub{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:24%;height:24%;border-radius:50%;z-index:2;
-  border:0;cursor:pointer;color:#3d2400;font-size:clamp(15px,4vw,24px);
-  background:radial-gradient(circle at 35% 30%,#fff5cf,var(--gold) 50%,var(--gold2));
-  box-shadow:0 0 0 5px var(--cream),0 8px 0 var(--gold2),0 12px 24px rgba(0,0,0,.4);transition:transform .1s}
+  border:0;cursor:pointer;color:#fff;font-size:clamp(15px,4vw,24px);text-shadow:0 2px 0 rgba(0,0,0,.15);
+  background:radial-gradient(circle at 35% 30%,#ffd4e3,var(--red) 55%,var(--red2));
+  box-shadow:0 0 0 5px #fff,0 8px 0 var(--red2),0 12px 24px rgba(120,70,90,.35);transition:transform .1s}
 .hub:active{transform:translate(-50%,-50%) scale(.93)}
 .hub:focus-visible{outline:3px solid var(--teal);outline-offset:4px}
 .hub[disabled]{cursor:wait;filter:saturate(.5)}
@@ -114,8 +101,8 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 
 /* 結果 */
 .mask[hidden]{display:none}
-.mask{position:fixed;inset:0;background:rgba(20,12,10,.66);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}
-.modal{background:var(--sur);border:2px solid var(--gold);border-radius:26px;box-shadow:0 10px 0 var(--gold2),0 30px 60px rgba(0,0,0,.5);
+.mask{position:fixed;inset:0;background:rgba(90,62,79,.55);display:flex;align-items:center;justify-content:center;z-index:20;padding:20px}
+.modal{background:var(--sur);border:2px solid var(--red);border-radius:30px;box-shadow:0 10px 0 var(--red2),0 30px 60px rgba(90,62,79,.45);
   padding:30px 26px 26px;text-align:center;max-width:420px;width:100%;animation:pop .4s cubic-bezier(.2,1.5,.4,1)}
 @keyframes pop{from{transform:scale(.55) rotate(-3deg);opacity:0}to{transform:none;opacity:1}}
 .modal .lbl{font-size:13px;color:var(--ink3);letter-spacing:3px}
@@ -137,8 +124,8 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
     <section class="card stage">
       <div class="box">
         <svg class="ptr" viewBox="0 0 44 58" aria-hidden="true">
-          <path d="M22 56 L3 14 A21 21 0 1 1 41 14 Z" fill="#e63946" stroke="#fff2c8" stroke-width="3"/>
-          <circle cx="22" cy="18" r="7" fill="#fff2c8"/>
+          <path d="M22 56 L3 14 A21 21 0 1 1 41 14 Z" fill="#f27ea6" stroke="#fff" stroke-width="3"/>
+          <path d="M22 26 C18 20 11 21 12 15 C13 10 19 10 22 14 C25 10 31 10 32 15 C33 21 26 20 22 26 Z" fill="#fff"/>
         </svg>
         <canvas id="wheel" width="900" height="900" aria-label="抽獎轉盤"></canvas>
         <button class="hub disp" id="hub" title="轉一下">GO</button>
@@ -196,8 +183,8 @@ input[type=number]{text-align:center;font-variant-numeric:tabular-nums}
 <script>
 /* ── 資料 ── */
 const KEY='lucky-wheel-v1';
-const COLORS=['#e63946','#f2a400','#0f8b8d','#7b5cff','#2a9d5c','#ff7b3d','#3f8cff','#e0489a',
-              '#c94c2b','#ffc94d','#22b3a0','#9b6bff','#66c46f','#ff9a5c','#5fa8ff','#ff6fb5'];
+const COLORS=['#f9b4cc','#ffd9b0','#c3e8d8','#d6c6f4','#fff1b8','#ffc2c2','#bfe0f5','#f7cfe9',
+              '#f4a3bf','#ffe4c4','#d9f0e4','#e4d8f9','#fff8d6','#ffd6d6','#d6ecfa','#fbe0f1'];
 const DEFAULT=[
   {n:'頭獎',w:1},{n:'二獎',w:2},{n:'三獎',w:3},{n:'再接再厲',w:6},{n:'銘謝惠顧',w:6},{n:'再轉一次',w:2}
 ];
@@ -231,13 +218,13 @@ function draw(){
     const a1=a0+Math.PI*2*it.w/tot;
     ctx.beginPath(); ctx.moveTo(0,0); ctx.arc(0,0,R-4,a0,a1); ctx.closePath();
     ctx.fillStyle=COLORS[S.items.indexOf(it)%COLORS.length]; ctx.fill();
-    ctx.strokeStyle='rgba(255,242,200,.9)'; ctx.lineWidth=5; ctx.stroke();
+    ctx.strokeStyle='#fff'; ctx.lineWidth=5; ctx.stroke();
     ctx.save(); ctx.rotate((a0+a1)/2);
     ctx.textAlign='right'; ctx.textBaseline='middle';
     const span=(a1-a0)*(R*.62);
     const fs=Math.max(18,Math.min(46,span*.55,(R*.6)/Math.max(2,it.n.length)*1.6));
     ctx.font='700 '+fs+'px "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif';
-    ctx.fillStyle='#fff'; ctx.shadowColor='rgba(0,0,0,.45)'; ctx.shadowBlur=4; ctx.shadowOffsetY=2;
+    ctx.fillStyle='#5a3e4f';
     ctx.fillText(it.n,R-46,0,R*.62);
     ctx.restore();
     a0=a1;
@@ -248,7 +235,7 @@ function draw(){
   for(let i=0;i<n;i++){
     const t=i/n*Math.PI*2;
     ctx.beginPath(); ctx.arc(R+Math.cos(t)*(R-14),R+Math.sin(t)*(R-14),5.5,0,Math.PI*2);
-    ctx.fillStyle=i%2?'#fff2c8':'#f2a400'; ctx.fill();
+    ctx.fillStyle=i%2?'#fff':'#f27ea6'; ctx.fill();
   }
 }
 /* 指針在正上方，算現在指到誰 */
